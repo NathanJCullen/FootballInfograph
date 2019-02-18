@@ -20,19 +20,29 @@ def search_between_date(df,x,y):
 	df = df.ix[x:y, :]
 	return df
 
-def write_to_file(lineToWrite):
+def write_to_file(lineToWrite, filename):
 	#Temporary function to output shit to txt file
-	f_write = open('highestscorer.txt', 'w+')
+	f_write = open(filename, 'w+')
 	f_write.write(lineToWrite)
 	f_write.close()
 
-def most_goals(df):
-	df['goals_scored'] = df['FTHG'] + df['FTAG']
-	dfTemp = df.sort_values('goals_scored', ascending=False)
+def make_stat_highest(df, statname):
+	dfTemp = df.sort_values(statname, ascending=False)
 	dfTemp = dfTemp.iloc[0]
-	name = str(dfTemp.name).split(" ")
-	output = ("The highest scoring game was %s vs %s with a %s - %s on %s" % (dfTemp['HomeTeam'], dfTemp['AwayTeam'], dfTemp['FTHG'], dfTemp['FTAG'], name[0]))
-	write_to_file(output)
+	name=str(dfTemp.name).split(" ")
+	output = ("The highest scoring game was %s vs %s with %s from a %s - %s on %s" % (dfTemp['HomeTeam'], dfTemp['AwayTeam'], dfTemp[statname], dfTemp['FTHG'], dfTemp['FTAG'], name[0]))
+	write_to_file(output, statname + ".txt")
+
+def make_stat_total(df, statname):
+	x = df[statname].sum()
+	write_to_file(str(x), statname +".txt")
+
+# def most_goals(df):
+# 	dfTemp = df.sort_values('goals_scored', ascending=False)
+# 	dfTemp = dfTemp.iloc[0]
+# 	name = str(dfTemp.name).split(" ")
+# 	output = ("The highest scoring game was %s vs %s with a %s - %s on %s" % (dfTemp['HomeTeam'], dfTemp['AwayTeam'], dfTemp['FTHG'], dfTemp['FTAG'], name[0]))
+# 	write_to_file(output)
 
 
 x = '20180810'
@@ -42,5 +52,7 @@ y = '20180817'
 df.apply(find_shot_stats)
 df.apply(did_HTWinner_win)
 
-most_goals(df)
+make_stat_highest(df, 'goals_scored')
+make_stat_total(df, 'total_yellow')
+make_stat_total(df, 'total_red')
 #print(df)
