@@ -30,7 +30,6 @@ def most_goals(df):
 	df['goals_scored'] = df['FTHG'] + df['FTAG']
 	dfTemp = df.sort_values('goals_scored', ascending=False)
 	dfTemp = dfTemp.iloc[0]
-	dfTemp.reset_index()
 	name = str(dfTemp.name).split(" ")
 	output = ("The highest scoring game was %s vs %s with a %s - %s on %s" % (dfTemp['HomeTeam'], dfTemp['AwayTeam'], dfTemp['FTHG'], dfTemp['FTAG'], name[0]))
 	write_to_file(output)
