@@ -17,12 +17,14 @@ def did_HTWinner_win(self):
 	df.loc[(df['htr'] > 0) & (df['ftr'] < 0), 'didHTWinnerWin'] = 'False'
 	df.loc[(df['htr'] == 0) & (df['ftr'] == 0), 'didHTWinnerWin'] = 'False'
 
-df.apply(find_shot_stats)
-df.apply(did_HTWinner_win)
 
-# x = '20180810'
-# y = '20180817'
-# df = df.loc[x:y, :]
-#df.loc[df['didHTWinnerWin'] == 'True']
-#df[df['HTHG'] == df['HTHG'].max()]
+def search_between_date(df,x,y):
+	df = df.ix[x:y, :]
+	return df
+
+x = '20180810'
+y = '20180817'
+#df.apply(find_shot_stats)
+#df.apply(did_HTWinner_win)
+df = search_between_date(df,x,y)
 print(df)
