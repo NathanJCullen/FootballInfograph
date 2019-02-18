@@ -9,14 +9,10 @@ def find_shot_stats(self):
 	df['AwayConv'] = round((df['FTAG'] / df['AS'] * 100), 1)
 
 def did_HTWinner_win(self):
-	df['ftr'] = df['FTHG'] - df['FTAG']
-	df['htr'] = df['HTHG'] - df['HTAG']
-	df.loc[(df['htr'] > 0) & (df['ftr'] > 0), 'didHTWinnerWin'] = 'True' 
-	df.loc[(df['htr'] < 0) & (df['ftr'] < 0), 'didHTWinnerWin'] = 'True'
-	df.loc[(df['htr'] < 0) & (df['ftr'] > 0), 'didHTWinnerWin'] = 'False'
-	df.loc[(df['htr'] > 0) & (df['ftr'] < 0), 'didHTWinnerWin'] = 'False'
-	df.loc[(df['htr'] == 0) & (df['ftr'] == 0), 'didHTWinnerWin'] = 'False'
-
+	df['ftr'] = df['FTHG'] - df['FTAG'] #Positive if HomeTeam Won, 0 if draw, negative if losing
+	df['htr'] = df['HTHG'] - df['HTAG'] #Positive if HomeTeam winning at HT, 0 if draw, negaitve if losing
+	df['didHTWinnerWin'] = 'False' #Default to False and changes it with the next line
+	df.loc[((df['ftr'] > 0) & (df['htr'] > 0)) | ((df['ftr'] < 0) & (df['htr'] < 0)), 'didHTWinnerWin'] = 'True' #If the home team were winning at HT and then won, or were losing at HT then lots: true
 
 def search_between_date(df,x,y):
 	df = df.ix[x:y, :]
@@ -24,7 +20,9 @@ def search_between_date(df,x,y):
 
 x = '20180810'
 y = '20180817'
+#df = search_between_date(df,x,y)
+
 #df.apply(find_shot_stats)
-#df.apply(did_HTWinner_win)
-df = search_between_date(df,x,y)
+df.apply(did_HTWinner_win)
+
 print(df)
