@@ -3,11 +3,15 @@ import urllib.request
 import requests
 from bs4 import BeautifulSoup
 import re
+import os
 
 def retrieve_last_seen_date(file_name):
-	f_read = open(file_name, 'r')
-	last_seen_date = int(f_read.read().strip())
-	f_read.close()
+	if(os.path.isfile(file_name)):
+		f_read = open(file_name, 'r')
+		last_seen_date = int(f_read.read().strip())
+		f_read.close()
+	else:
+		last_seen_date = 9999999
 	return last_seen_date
 
 def store_last_seen_date(last_seen_date, file_name):
