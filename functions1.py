@@ -41,7 +41,7 @@ def get_team_stats(df, teamname):
 	# tempDf = df.loc[(df['HomeTeam'] == teamname)]
 	# tempDf = tempDf.append(df.loc[df['AwayTeam'] == teamname])
 	# REMOVE THESE WITH BETTER LINE
-	print(tempDf)
+	print(df[(df.HomeTeam == 'Chelsea') | (df.AwayTeam == 'Chelsea')])
 
 x = '20180810'
 y = '20180817'
