@@ -44,17 +44,27 @@ def get_team_stats(df, teamname, homestat, awaystat):
 	teamtotalstat = tempdf[teamname+homestat].sum()
 	print(teamtotalstat)
 
-
+def compare_highest_stats(df, homestat, awaystat):
+	dfTempHome = df.sort_values(homestat, ascending=False)
+	dfTempAway = df.sort_values(awaystat, ascending=False)
+	top_stats = {}
+	for place in range(0,3):
+		if (dfTempHome[homestat][0] >= dfTempAway[awaystat][0]):
+			top_stats[dfTempHome['HomeTeam'][0]] = dfTempHome[homestat][0]
+			dfTempHome.drop(dfTempHome.index[0], inplace=True)
+		else:
+			top_stats[dfTempAway['AwayTeam'][0]] = dfTempAway[awaystat][0]
+			dfTempAway.drop(dfTempAway.index[0], inplace=True)
+	print(top_stats)
 
 x = '20180810'
 y = '20180817'
-#df = search_between_date(df,x,y)
+df = search_between_date(df,x,y)
 
 df.apply(find_shot_stats)
 df.apply(did_HTWinner_win)
 
-get_team_stats(df, "Arsenal", "FTHG", "FTAG")
-
+compare_highest_stats(df, 'FTHG', 'FTAG')
 #make_stat_highest(df, 'goals_scored')
 #make_stat_total(df, 'total_yellow')
 #make_stat_total(df, 'total_red')
