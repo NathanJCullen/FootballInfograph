@@ -84,14 +84,23 @@ def find_margin(df):
 		output = ("Biggest Margin: %s - %s by %s and %s" % (dfTemp2['FTHG'], dfTemp2['FTAG'], dfTemp2['HomeTeam'], dfTemp2['AwayTeam']))
 	print(output)
 
+def referee_cards():
+	df['totalmatchcards'] = df['HY'] + df['HR'] + df['AY'] + df['AR']
+	dftemp = df.sort_values('totalmatchcards', ascending=False)
+	dftemp = dftemp.iloc[0]
+	output = ('Most total number of cards in a game was given by: %s with %s cards' % (dftemp['Referee'], dftemp['totalmatchcards']))
+	print(output)
+
+referee_cards()
+
 x = '20180810'
 y = '20180817'
 #df = search_between_date(df,x,y)
 
-df.apply(find_shot_stats)
-df.apply(did_HTWinner_win)
+# df.apply(find_shot_stats)
+# df.apply(did_HTWinner_win)
 
-find_margin(df)
+# find_margin(df)
 #compare_highest_stats(df, 'FTHG', 'FTAG')
 #compare_lowest_stats(df, 'HS', 'AS')
 #make_stat_highest(df, 'goals_scored')
