@@ -1,0 +1,31 @@
+TOP SCORER			GAME WITH MOST GOALS
+scorer - no.goals  		home team score - away team score	
+				BIGGEST MARGAIN                      
+scorer - no.goals		home team score - away team score
+scorer - no.goals
+
+MOST SHOTS			LEAST SHOTS
+team - no.shots			team - no.shots
+team - no.shots			team - no.shots
+team - no.shots			team - no.shots
+
+TEAM BEST ACCURRACY		TEAM WORST ACCURACY
+team - accuracy			team - accuracy
+team - accuracy			team - accuracy
+team - accuract			team - accuracy
+
+TOP TEAM CONV			LEAST TEAM CONV
+team - conversion		team - conversion
+team - conversion		team - conversion
+team - conversion		team - conversion
+
+		% HALF TIME WINNER WINS
+			number
+
+total yellows - no.yellows	total reds - no.reds
+
+TEAM MOST YELLOWS		TEAM MOST REDS
+team - no.yellows		team - no.reds
+
+		REFEREE MOST CARDS
+		referee - no.cards
