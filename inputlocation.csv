@@ -1,0 +1,18 @@
+stat, x, y 
+topscorer x3, x, y
+gamewithmostgoals, x, y
+biggestmargain, x, y
+team most shots x3, x, y
+team least shots x3, x, y
+team most shot target x3, x, y
+team least shot target x3, x, y
+team best shot accuraccy, x, y
+team worst accuracy, x, y
+top 3 team conv, x, y
+least 3 team conv, x, y
+% half time winner wins, x, y
+total yellows, x, y
+total reds, x, y
+team most yellows, x, y
+team most reds, x, y
+referee most cards, x, y
