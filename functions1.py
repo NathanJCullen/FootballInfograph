@@ -37,11 +37,18 @@ def make_stat_total(df, statname):
 	x = df[statname].sum()
 	write_to_file(str(x), statname +".txt")
 
-def get_team_stats(df, teamname):
+def get_team_stats():
 	# tempDf = df.loc[(df['HomeTeam'] == teamname)]
 	# tempDf = tempDf.append(df.loc[df['AwayTeam'] == teamname])
 	# REMOVE THESE WITH BETTER LINE
-	print(df[(df.HomeTeam == 'Chelsea') | (df.AwayTeam == 'Chelsea')])
+	tempdf = (df[(df.HomeTeam == 'Chelsea') | (df.AwayTeam == 'Chelsea')])
+	
+	tempdf.loc[(tempdf['HomeTeam'] == 'Chelsea') , 'ChelseaGoals'] = tempdf['FTHG']
+	tempdf.loc[(tempdf['AwayTeam'] == 'Chelsea') , 'ChelseaGoals'] = tempdf['FTAG']
+	chelseatotalgoals = tempdf['ChelseaGoals'].sum()
+	print(chelseatotalgoals)
+
+
 
 x = '20180810'
 y = '20180817'
@@ -50,7 +57,8 @@ y = '20180817'
 df.apply(find_shot_stats)
 df.apply(did_HTWinner_win)
 
-get_team_stats(df, "Man United")
+get_team_stats()
+
 #make_stat_highest(df, 'goals_scored')
 #make_stat_total(df, 'total_yellow')
 #make_stat_total(df, 'total_red')
