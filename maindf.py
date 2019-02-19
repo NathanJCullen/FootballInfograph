@@ -17,4 +17,6 @@ def create_df():
     df['goals_scored'] = df['FTHG'] + df['FTAG']
     df['total_yellow'] = df['HY'] + df['AY']
     df['total_red'] = df['HR'] + df['AR']
+    df['total_shots'] = df['HS'] + df['AS']
+    df['total_shots_target'] = df['HST'] + df['AST']
     return df

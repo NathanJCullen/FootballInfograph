@@ -37,13 +37,11 @@ def make_stat_total(df, statname):
 	x = df[statname].sum()
 	write_to_file(str(x), statname +".txt")
 
-# def most_goals(df):
-# 	dfTemp = df.sort_values('goals_scored', ascending=False)
-# 	dfTemp = dfTemp.iloc[0]
-# 	name = str(dfTemp.name).split(" ")
-# 	output = ("The highest scoring game was %s vs %s with a %s - %s on %s" % (dfTemp['HomeTeam'], dfTemp['AwayTeam'], dfTemp['FTHG'], dfTemp['FTAG'], name[0]))
-# 	write_to_file(output)
-
+def get_team_stats(df, teamname):
+	# tempDf = df.loc[(df['HomeTeam'] == teamname)]
+	# tempDf = tempDf.append(df.loc[df['AwayTeam'] == teamname])
+	# REMOVE THESE WITH BETTER LINE
+	print(tempDf)
 
 x = '20180810'
 y = '20180817'
@@ -52,7 +50,10 @@ y = '20180817'
 df.apply(find_shot_stats)
 df.apply(did_HTWinner_win)
 
-make_stat_highest(df, 'goals_scored')
-make_stat_total(df, 'total_yellow')
-make_stat_total(df, 'total_red')
+get_team_stats(df, "Man United")
+#make_stat_highest(df, 'goals_scored')
+#make_stat_total(df, 'total_yellow')
+#make_stat_total(df, 'total_red')
+#make_stat_total(df, 'total_shots')
+#make_stat_total(df, 'total_shots_target')
 #print(df)
