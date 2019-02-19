@@ -14,7 +14,6 @@ def did_HTWinner_win(self):
 	df['htr'] = df['HTHG'] - df['HTAG'] #Positive if HomeTeam winning at HT, 0 if draw, negaitve if losing
 	df['didHTWinnerWin'] = 'False' #Default to False and changes it with the next line
 	df.loc[((df['ftr'] > 0) & (df['htr'] > 0)) | ((df['ftr'] < 0) & (df['htr'] < 0)), 'didHTWinnerWin'] = 'True' #If the home team were winning at HT and then won, or were losing at HT then lots: true
-	df.drop(['ftr','htr'], axis=1, inplace=True)
 
 def search_between_date(df,x,y):
 	df = df.ix[x:y, :]
@@ -47,6 +46,7 @@ def get_team_stats(df, teamname, homestat, awaystat):
 def compare_highest_stats(df, homestat, awaystat):
 	dfTempHome = df.sort_values(homestat, ascending=False)
 	dfTempAway = df.sort_values(awaystat, ascending=False)
+	#Dictionaries overwrite stuff. This doesn't work nicely when the same team has highest stats
 	top_stats = {}
 	for place in range(0,3):
 		if (dfTempHome[homestat][0] >= dfTempAway[awaystat][0]):
@@ -57,14 +57,43 @@ def compare_highest_stats(df, homestat, awaystat):
 			dfTempAway.drop(dfTempAway.index[0], inplace=True)
 	print(top_stats)
 
+def compare_lowest_stats(df, homestat, awaystat):
+	dfTempHome = df.sort_values(homestat, ascending=True)
+	dfTempAway = df.sort_values(awaystat, ascending=True)
+	#Dictionaries overwrite stuff. This doesn't work nicely when the same team has highest stats
+	low_stats = {}
+	for place in range(0,3):
+		if (dfTempHome[homestat][0] >= dfTempAway[awaystat][0]):
+			low_stats[dfTempHome['HomeTeam'][0]] = dfTempHome[homestat][0]
+			dfTempHome.drop(dfTempHome.index[0], inplace=True)
+		else:
+			low_stats[dfTempAway['AwayTeam'][0]] = dfTempAway[awaystat][0]
+			dfTempAway.drop(dfTempAway.index[0], inplace=True)
+	print(low_stats)
+
+def find_margin(df):
+	dfTemp = df.sort_values('ftr', ascending=False)
+	dfTemp = dfTemp.iloc[0]
+	x = int(dfTemp['ftr'])
+	dfTemp2 = df.sort_values('ftr', ascending=True)
+	dfTemp2 = dfTemp2.iloc[0]
+	y = int(dfTemp2['ftr']) *-1
+	if(x >= y):
+		output = ("Biggest Margin: %s - %s by %s and %s" % (dfTemp['FTHG'], dfTemp['FTAG'], dfTemp['HomeTeam'], dfTemp['AwayTeam']))
+	else:
+		output = ("Biggest Margin: %s - %s by %s and %s" % (dfTemp2['FTHG'], dfTemp2['FTAG'], dfTemp2['HomeTeam'], dfTemp2['AwayTeam']))
+	print(output)
+
 x = '20180810'
 y = '20180817'
-df = search_between_date(df,x,y)
+#df = search_between_date(df,x,y)
 
 df.apply(find_shot_stats)
 df.apply(did_HTWinner_win)
 
-compare_highest_stats(df, 'FTHG', 'FTAG')
+find_margin(df)
+#compare_highest_stats(df, 'FTHG', 'FTAG')
+#compare_lowest_stats(df, 'HS', 'AS')
 #make_stat_highest(df, 'goals_scored')
 #make_stat_total(df, 'total_yellow')
 #make_stat_total(df, 'total_red')
